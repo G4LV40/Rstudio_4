@@ -1,0 +1,44 @@
+#### Instalando Pacotes e ativando bilbiotecas ###------------------------------
+
+#Ativando bibliotecas
+library(ExpDes.pt)
+library(fBasics)
+
+
+#### Usando pacotes para fazer análises descritivas####-------------------------
+
+dados<-read.table("dados_aula_2.csv", h=TRUE)
+attach(dados)
+basicStats(dados)
+
+# A saída como matriz permite por exemplo que se isole vetores dentro dela
+# armazene em objetos 
+EDA<-basicStats(dados$Peso)
+
+#Obten-se por exeplo os intervalo de confiança ao nível de 5%
+IC.Confian<-c(EDA[11:12,1])
+
+#### ANOVA - Análise de Variância####-------------------------------------------
+dados<-read.table("dados_aula_4.csv",header=TRUE)
+attach(dados)
+
+#nomes das colunas 
+head(dados)
+
+# "ALTURA" como variável independente num modelo linear
+is.factor(CULTIVAR)
+is.numeric(ALTURA)
+
+
+#Tratamentos devem ser um termos NÃO-Numéricos
+Tratamento<-as.factor(CULTIVAR)
+
+modelo.linear<-lm(ALTURA~ Tratamento)
+
+Saida.lista<-aov(modelo.linear)
+Saida.DFR<-anova(modelo.linear)
+
+# Qual a diferênça? Saida como lista ou dataFreme, uma saida como matriz da 
+#maiores possibilidades
+Saida.DFR[1,2]
+Saida.lista[1,2]
